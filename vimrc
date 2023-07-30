@@ -1,268 +1,366 @@
-" Zjardyn vim dot file
-set clipboard^=unnamed,unnamedplus "cross platfrom
-syntax on " switch syntax highlighting on
-set nocp " make Vim behave in a more useful way
-set belloff=all " silence all events 
-set shortmess+=A " don't pass messages 
-set number " show line numbers
-set cursorline "show cursorline
-set mouse=v "let me copy screen to clipboard
-set noswapfile
-"Tab stuff
-set tabstop=2
+
+
+" ____   ____.__                               _____.__        
+" \   \ /   /|__| _____     ____  ____   _____/ ____\__| ____  
+"  \   Y   / |  |/     \  _/ ___\/  _ \ /    \   __\|  |/ ___\ 
+"   \     /  |  |  Y Y  \ \  \__(  <_> )   |  \  |  |  / /_/  >
+"    \___/   |__|__|_|  /  \___  >____/|___|  /__|  |__\___  / 
+"                     \/       \/           \/        /_____/  
+
+
+
+syntax on " Syntax Highlighting
+set nocp  " Make vim useful
+set mouse=a " Allow scrolling
+set noswapfile " No swap file
+
+set tabstop=2 " Tab settings
 set shiftwidth=2
 set expandtab
-" go to end of line, not last character 
-set virtualedit+=onemore
-nnoremap $ $l
-set formatoptions-=cro " Disable automatic commenting on newline 
-set splitbelow splitright
-set wildmenu
-set wrap!
-set autochdir
+
+set number " Line number settings
+set relativenumber
+
+set autochdir " Auto change directory when exploring
+set wildmenu " Have autocomplete menu when : is opened 
+set formatoptions-=cro " Do not continue comments
+set timeoutlen=5
+set ttimeoutlen=50
+
+call plug#begin()
+
+Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'preservim/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'jalvesaq/Nvim-R'
+
+call plug#end()
+
+" Keybindings
 " window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-" terminal window navigation
-tnoremap <C-h> <C-w>h
-tnoremap <C-j> <C-w>j
-tnoremap <C-k> <C-w>k
-tnoremap <C-l> <C-w>l
-" manual indenting in visual mode
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
+" Resize windows
+map <silent><C-h> :vertical resize +5<CR>
+map <silent><C-j> :resize +5<CR>
+map <silent><C-k> :resize -5<CR>
+map <silent><C-l> :vertical resize -5<CR>
+
+" Manual indenting in visual mode
 vnoremap > >gv
 vnoremap < <gv
-inoremap jk <ESC>
-inoremap kj <ESC>
-" move lines around
+" Another way to exit insert mode
+" inoremap jk <ESC>
+" inoremap kj <ESC>
+" Move lines around
 nnoremap J :m .+1<CR>==
 nnoremap K :m .-2<CR>==
 vnoremap K :m '<-2<CR>gv=gv
 vnoremap J :m '>+1<CR>gv=gv
-" Popup window colors
-hi Pmenu ctermbg=DarkGray ctermfg=White
-" matching bracket colours
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
-" Manage plugins with vim-plug 
+" Buffer manipulation
+map <silent>gn :bn<cr>
+map <silent>gp :bp<cr>
+map <silent>gd :bd<cr>
+
+" use Alt as meta key (for linux users) 
+for i in range(97,122)
+  let c = nr2char(i)
+
+  exec "map \e".c." <m-".c.">"
+  exec "map! \e".c." <m-".c.">"
+endfor
+
+" R keybindings
+map , :/ 
+
+" Leader key
+let mapleader = "\<Space>"
+" Leader mappings
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
+" Run scripts
+nnoremap <silent><leader>p :!python3 % <CR>
+
+" Colourscheme
+" colorscheme molokai 
+" colorscheme gruvbox
+" if !exists('g:airline_symbols')
+" let g:airline_symbols = {}
+" endif
+" " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+" " powerline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_symbols.linenr = ''
+
+" Tips 
+" 
+" Go to next word under cursor
+" g*
+"
+" Open file in new buffer 
+" edit (or e) <filename>
+" 
+" Open file in new windows
+" new <filename>
+"
+" Ctrl-X decrement
+" Ctrl-A increment
+"
+" navigate between autocomplete args
+" <C-j>
+
+syntax on " Syntax Highlighting
+set nocp  " Make vim useful
+set mouse=a " Allow scrolling
+set noswapfile " No swap file
+
+set tabstop=2 " Tab settings
+set shiftwidth=2
+set expandtab
+
+set number " Line number settings
+set relativenumber
+
+set autochdir " Auto change directory when exploring
+set wildmenu " Have autocomplete menu when : is opened 
+set formatoptions-=cro " Do not continue comments
+set timeoutlen=5
+set ttimeoutlen=50
+
 call plug#begin()
 
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'preservim/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'}
-Plug 'jalvesaq/zotcite'
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'jalvesaq/Nvim-R'
+
 call plug#end()
 
+" Keybindings
+" window navigation
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
+" Resize windows
+map <silent><C-h> :vertical resize +5<CR>
+map <silent><C-j> :resize +5<CR>
+map <silent><C-k> :resize -5<CR>
+map <silent><C-l> :vertical resize -5<CR>
 
+" Manual indenting in visual mode
+vnoremap > >gv
+vnoremap < <gv
+" Another way to exit insert mode
+" inoremap jk <ESC>
+" inoremap kj <ESC>
+" Move lines around
+nnoremap J :m .+1<CR>==
+nnoremap K :m .-2<CR>==
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+" Buffer manipulation
+map <silent>gn :bn<cr>
+map <silent>gp :bp<cr>
+map <silent>gd :bd<cr>
 
-" set leader key 
+" use Alt as meta key (for linux users) 
+for i in range(97,122)
+  let c = nr2char(i)
+
+  exec "map \e".c." <m-".c.">"
+  exec "map! \e".c." <m-".c.">"
+endfor
+
+" R keybindings
+map , :/ 
+
+" Leader key
 let mapleader = "\<Space>"
-map <leader>v :vsp $MYVIMRC<CR>
-
-" switch buffers 
-map gn :bn<cr>
-map gp :bp<cr>
-map gd :bd<cr
-
-function! DeleteEmptyBuffers()
-  let [i, n; empty] = [1, bufnr('$')]
-  while i <= n
-    if bufexists(i) && bufname(i) == ''
-      call add(empty, i)
-    endif
-    let i += 1
-  endwhile
-  if len(empty) > 0
-    exe 'bdelete' join(empty)
-  endif
-endfunction
-
-" Open a file explorer and don't open new buffers when toggling
-nnoremap <silent><leader>e :Lexplore<CR> :vertical resize 25 <CR> 
-let g:netrw_banner=0
-nnoremap <silent><leader>b : call DeleteEmptyBuffers()<CR>
-
-" Creates a terminal
-nnoremap <silent><leader>t :term<CR>
-tnoremap <silent><leader>t <C-d> 
-
-" Runs scripts
-nnoremap <silent><leader>c :!gcc % && ./a.out <CR>
+" Leader mappings
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
+" Run scripts
 nnoremap <silent><leader>p :!python3 % <CR>
-nnoremap <silent><leader>o :!python2 % <CR>
-" Escape brackets etc
-inoremap <C-e> <C-o>A
 
-" Run markdown pdf note taker 
-:command View !compilationscript.py % -p
-"Coc 
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-set encoding=utf-8
-" TextEdit might fail if hidden is not set.
-set hidden
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-" Give more space for displaying messages.
-set cmdheight=2
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
-
-" COC
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" " Use <c-space> to trigger completion.
-" if has('nvim')
-"   inoremap <silent><expr> <c-space> coc#refresh()
-" else
-"   inoremap <silent><expr> <c-@> coc#refresh()
+" Colourscheme
+" colorscheme molokai 
+" colorscheme gruvbox
+" if !exists('g:airline_symbols')
+" let g:airline_symbols = {}
 " endif
+" " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+" " powerline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_symbols.linenr = ''
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Tips 
+" 
+" Go to next word under cursor
+" g*
+"
+" Open file in new buffer 
+" edit (or e) <filename>
+" 
+" Open file in new windows
+" new <filename>
+"
+" Ctrl-X decrement
+" Ctrl-A increment
+"
+" navigate between autocomplete args
+" <C-j>
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+syntax on " Syntax Highlighting
+set nocp  " Make vim useful
+set mouse=a " Allow scrolling
+set noswapfile " No swap file
 
-" Use K to show documentation in preview window.
-nnoremap <silent> Y :call <SID>show_documentation()<CR>
+set tabstop=2 " Tab settings
+set shiftwidth=2
+set expandtab
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+set number " Line number settings
+set relativenumber
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+set autochdir " Auto change directory when exploring
+set wildmenu " Have autocomplete menu when : is opened 
+set formatoptions-=cro " Do not continue comments
+set timeoutlen=5
+set ttimeoutlen=50
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+call plug#begin()
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'preservim/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'jalvesaq/Nvim-R'
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+call plug#end()
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-" xmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Keybindings
+" window navigation
+map <M-h> <C-w>h
+map <M-j> <C-w>j
+map <M-k> <C-w>k
+map <M-l> <C-w>l
+" Resize windows
+map <silent><C-h> :vertical resize +5<CR>
+map <silent><C-j> :resize +5<CR>
+map <silent><C-k> :resize -5<CR>
+map <silent><C-l> :vertical resize -5<CR>
 
-" " Remap keys for applying codeAction to the current buffer.
-" nmap <leader>ac  <Plug>(coc-codeaction)
-" " Apply AutoFix to problem on the current line.
-" nmap <leader>qf  <Plug>(coc-fix-current)
+" Manual indenting in visual mode
+vnoremap > >gv
+vnoremap < <gv
+" Another way to exit insert mode
+" inoremap jk <ESC>
+" inoremap kj <ESC>
+" Move lines around
+nnoremap J :m .+1<CR>==
+nnoremap K :m .-2<CR>==
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+" Buffer manipulation
+map <silent>gn :bn<cr>
+map <silent>gp :bp<cr>
+map <silent>gd :bd<cr>
 
-" Run the Code Lens action on the current line.
-" nmap <leader>cl  <Plug>(coc-codelens-action)
+" use Alt as meta key (for linux users) 
+for i in range(97,122)
+  let c = nr2char(i)
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+  exec "map \e".c." <m-".c.">"
+  exec "map! \e".c." <m-".c.">"
+endfor
 
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+" R keybindings
+map , :/ 
 
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
+" Leader key
+let mapleader = "\<Space>"
+" Leader mappings
+nnoremap <silent><leader>e :NERDTreeToggle<CR>
+" Run scripts
+nnoremap <silent><leader>p :!python3 % <CR>
 
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Mappings for CoCList
-" Show all diagnostics.
-" nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" " Manage extensions.
-" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" " Show commands.
-" nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" " Find symbol of current document.
-" nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" " Search workspace symbols.
-" nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" " Do default action for next item.
-" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" " Do default action for previous item.
-" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" " Resume latest coc list.
-" nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Colourscheme
+" colorscheme molokai 
+" colorscheme gruvbox
+" if !exists('g:airline_symbols')
+" let g:airline_symbols = {}
+" endif
+" " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+" " powerline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_symbols.linenr = ''
 
 " Tips 
 " 
